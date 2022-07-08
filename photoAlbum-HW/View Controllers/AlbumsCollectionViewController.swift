@@ -29,7 +29,29 @@ class AlbumsCollectionViewController: UIViewController, UICollectionViewDelegate
         [Item(text: "Tyt text", image: UIImage(named: "photo2"), number: 222),
          Item(text: "Tyt text", image: UIImage(named: "photo1"), number: 333),
          Item(text: "Tyt text", image: UIImage(named: "photo7"), number: 888),
-         Item(text: "Tyt text", image: UIImage(named: "photo9"), number: 987)]
+         Item(text: "Tyt text", image: UIImage(named: "photo9"), number: 987)],
+        
+        [Item(text: "Video", image: UIImage(systemName: "video")?
+            .withTintColor(.systemBlue, renderingMode: .alwaysOriginal),
+              number: 999),
+         Item(text: "Selfy", image: UIImage(systemName: "person.crop.square")?
+             .withTintColor(.systemBlue, renderingMode: .alwaysOriginal),
+               number: 1045),
+         Item(text: "Photo Live Photos", image: UIImage(systemName: "livephoto")?
+             .withTintColor(.systemBlue, renderingMode: .alwaysOriginal),
+               number: 1945),
+         Item(text: "Portretu", image: UIImage(systemName: "cube")?
+             .withTintColor(.systemBlue, renderingMode: .alwaysOriginal),
+               number: 1133),
+         Item(text: "Panoramu", image: UIImage(systemName: "pano")?
+             .withTintColor(.systemBlue, renderingMode: .alwaysOriginal),
+               number: 1045),
+         Item(text: "Serii", image: UIImage(systemName: "square.stack.3d.down.right")?
+             .withTintColor(.systemBlue, renderingMode: .alwaysOriginal),
+               number: 3334),
+         Item(text: "Snimki Ekrana", image: UIImage(systemName: "camera.viewfinder")?
+             .withTintColor(.systemBlue, renderingMode: .alwaysOriginal),
+               number: 998)]
     ]
     
     private lazy var collectionView: UICollectionView = {
@@ -129,6 +151,26 @@ class AlbumsCollectionViewController: UIViewController, UICollectionViewDelegate
         return section
     }
     
+    // Third Section
+    
+    private func setupThirdLayout() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(1/8))
+        
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 18, leading: 0, bottom: 0, trailing: 0)
+
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: itemSize, subitem: item, count: 1)
+    
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets.leading = 12
+        
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: itemSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        header.zIndex = Int.max
+        section.boundarySupplementaryItems = [header]
+        
+        return section
+    }
+    
     func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int,
                                                             layoutEnviroment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
@@ -163,7 +205,7 @@ extension AlbumsCollectionViewController: UICollectionViewDataSource {
         case 1:
             return arrayModels[1].count
         case 2:
-            return 0
+            return arrayModels[2].count
         case 3:
             return 0
         default:
@@ -177,13 +219,19 @@ extension AlbumsCollectionViewController: UICollectionViewDataSource {
         let item = arrayModels[indexPath.section][indexPath.row]
         switch(indexPath as NSIndexPath).section {
             
-        case 0:
+        case 0, 1:
             cell.photoImageView.image = item.image
             cell.namePhotoLabel.text = item.text
             cell.numberPhotosLabel.text = "\(item.number)"
+        case 2:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AlbumCell.reuseID, for: indexPath) as! AlbumCell
+            cell.photoImageView.image = item.image
+            cell.namePhotoLabel.text = item.text
+            cell.numberPhotosLabel.text = "\(item.number)"
+            return cell
         default: break
         }
-        return cell
+        return UICollectionViewCell()
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderView.reuseID, for: indexPath) as? HeaderView else {
@@ -196,6 +244,9 @@ extension AlbumsCollectionViewController: UICollectionViewDataSource {
         case 1:
             headerView.label.text = "Общие альбомы"
             headerView.button.text = "Все"
+        case 2:
+            headerView.label.text = "Типы медиафайлов"
+            headerView.button.text = nil
         default:
             break
         }
