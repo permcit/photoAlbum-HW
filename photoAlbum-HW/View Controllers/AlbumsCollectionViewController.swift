@@ -7,13 +7,6 @@
 
 import UIKit
 
-struct Item {
-    
-    let text: String
-    let image: UIImage?
-    let number: UInt
-}
-
 enum Sections: Int {
     case first = 0
     case second = 1
@@ -75,12 +68,12 @@ class AlbumsCollectionViewController: UIViewController, UICollectionViewDelegate
     // MARK: - SetupLayout
     
     private func setupFirstLayout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(1.0))
         
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.95/2), heightDimension: .fractionalHeight(1))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.475), heightDimension: .fractionalWidth(1))
         
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 2)
         
@@ -88,8 +81,15 @@ class AlbumsCollectionViewController: UIViewController, UICollectionViewDelegate
         
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 0
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12)
         section.orthogonalScrollingBehavior = .paging
+        section.contentInsets.leading = 15
+        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(45))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        header.zIndex = Int.max
+        section.boundarySupplementaryItems = [header]
+        
         return section
     }
     
@@ -144,9 +144,17 @@ class AlbumsCollectionViewController: UIViewController, UICollectionViewDelegate
             case 0:
                 cell.photoImageView.image = item.image
                 cell.namePhotoLabel.text = item.text
-                cell.numberPhotosLabel.text = item.number.formatterWithSeparator
+                cell.numberPhotosLabel.text = "\(item.number)"
             default: break
             }
             return cell
+        }
+        func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderView.reuseID, for: indexPath) as? HeaderView else {
+                return HeaderView()
+        }
+        headerView.label.text = "Мои альбомы"
+        headerView.button.text = "Все"
+        return headerView
         }
     }
