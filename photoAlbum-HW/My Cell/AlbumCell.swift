@@ -63,6 +63,8 @@ class AlbumCell: UICollectionViewCell {
     }
 }
 
+    // MARK: - Metric
+
 enum Metric {
     static let indent: CGFloat = 4
     static let photoRadius: CGFloat = 10
