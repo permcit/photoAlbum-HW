@@ -15,7 +15,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
+        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+        window?.windowScene = windowScene
+        
         let tapBarController = UITabBarController()
+        tapBarController.tabBar.backgroundColor = .systemBackground
         
         let firstViewController = UIViewController()
         firstViewController.tabBarItem = UITabBarItem(title: "Медиатека", image: UIImage(systemName: "photo.on.rectangle"), tag: 0)
@@ -36,9 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             albumNavigationController,
             fourViewController
         ], animated: true)
-
-        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
-        window?.windowScene = windowScene
+        
         window?.rootViewController = tapBarController
         window?.makeKeyAndVisible()
     }

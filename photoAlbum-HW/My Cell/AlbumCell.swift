@@ -23,14 +23,14 @@ class AlbumCell: UICollectionViewCell {
     lazy var namePhotoLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.font = .systemFont(ofSize: 17)
+        label.font = .systemFont(ofSize: Metric.namePhotoLabelFont)
         return label
     }()
     
     lazy var numberPhotosLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.font = .systemFont(ofSize: 15)
+        label.font = .systemFont(ofSize: Metric.numberPhotoLabelFont)
         label.textColor = .systemGray6
         return label
     }()
@@ -66,4 +66,6 @@ class AlbumCell: UICollectionViewCell {
 enum Metric {
     static let indent: CGFloat = 4
     static let photoRadius: CGFloat = 10
+    static let namePhotoLabelFont: CGFloat = 17
+    static let numberPhotoLabelFont: CGFloat = 15
 }
