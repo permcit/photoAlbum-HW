@@ -17,6 +17,7 @@
 		C1F957B72878125B0091F9C8 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F957B62878125B0091F9C8 /* Model.swift */; };
 		C1F957B9287840BB0091F9C8 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F957B8287840BB0091F9C8 /* Header.swift */; };
 		C1F957BB287847520091F9C8 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F957BA287847520091F9C8 /* UIStackView.swift */; };
+		C1F957BD28784F7F0091F9C8 /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F957BC28784F7F0091F9C8 /* TableCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		C1F957B62878125B0091F9C8 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		C1F957B8287840BB0091F9C8 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		C1F957BA287847520091F9C8 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
+		C1F957BC28784F7F0091F9C8 /* TableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				C1F957B32878021A0091F9C8 /* AlbumCell.swift */,
+				C1F957BC28784F7F0091F9C8 /* TableCell.swift */,
 			);
 			path = "My Cell";
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1F957BD28784F7F0091F9C8 /* TableCell.swift in Sources */,
 				C1F957B9287840BB0091F9C8 /* Header.swift in Sources */,
 				C1F957B72878125B0091F9C8 /* Model.swift in Sources */,
 				C1F957952877EF230091F9C8 /* AppDelegate.swift in Sources */,
