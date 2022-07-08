@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let secondViewController = UIViewController()
         secondViewController.tabBarItem = UITabBarItem(title: "Для Вас", image: UIImage(systemName: "heart.text.square"), tag: 1)
         
-        let thirdViewController = AlbumsCollectionViewController(collectionViewLayout: UICollectionViewLayout())
+        let thirdViewController = AlbumsCollectionViewController()
         thirdViewController.tabBarItem = UITabBarItem(title: "Альбомы", image: UIImage(systemName: "rectangle.stack.fill"), tag: 2)
         let albumNavigationController = UINavigationController(rootViewController: thirdViewController)
         
