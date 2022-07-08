@@ -9,6 +9,8 @@ import UIKit
 
 class TableCell: UICollectionViewCell {
     
+    static let reuseID = "TableCellId"
+    
     lazy var iconView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -35,16 +37,10 @@ class TableCell: UICollectionViewCell {
     
     lazy var button: UIButton = {
         let button = UIButton()
-        button.imageView?.image = UIImage(systemName: "chevron.right")
-        button.imageView?.tintColor = .gray
+        button.layer.masksToBounds = true
+        let image = UIImage(systemName: "chevron.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 16, weight: .semibold))?.withTintColor(.systemGray6, renderingMode: .alwaysOriginal)
+        button.setImage(image, for: .normal)
         return button
-    }()
-    
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fill
-        return stackView
     }()
     
     lazy var lineSeparators: UIView = {
@@ -57,23 +53,37 @@ class TableCell: UICollectionViewCell {
     
     func settingViewCell() {
         contentView.addSubviewsForAutoLayout([
-            stackView,
-            lineSeparators
+            iconView,
+            lineSeparators,
+            nameLabel,
+            button,
+            numberPhotosLabel,
         ])
         
         NSLayoutConstraint.activate([
             
-            stackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            stackView.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor),
+            iconView.heightAnchor.constraint(equalToConstant: TableCellMetric.iconSize),
+            iconView.widthAnchor.constraint(equalToConstant: TableCellMetric.iconSize),
+            iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            iconView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: TableCellMetric.indent),
             
-            lineSeparators.topAnchor.constraint(equalTo: stackView.bottomAnchor),
+            lineSeparators.topAnchor.constraint(equalTo: self.bottomAnchor),
             lineSeparators.heightAnchor.constraint(equalToConstant: TableCellMetric.lineHeight),
-            lineSeparators.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor),
-            lineSeparators.rightAnchor.constraint(equalTo: self.rightAnchor)
+            lineSeparators.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: TableCellMetric.lineIndent),
+            lineSeparators.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            
+            nameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: TableCellMetric.lineIndent),
+            
+            button.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            button.heightAnchor.constraint(equalToConstant: TableCellMetric.iconSize),
+            button.widthAnchor.constraint(equalToConstant: TableCellMetric.iconSize),
+            button.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor, constant: -TableCellMetric.indent),
+            
+            numberPhotosLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            numberPhotosLabel.trailingAnchor.constraint(equalTo: button.leadingAnchor, constant: -TableCellMetric.lineHeight)
             ])
-            }
+        }
                                     
          // MARK: Initialization
                                     
@@ -90,6 +100,10 @@ class TableCell: UICollectionViewCell {
             // MARK: - Metric
                                     
 enum TableCellMetric {
-            static let indent: CGFloat = 4
-            static let lineHeight: CGFloat = 1
-        }
+    static let indent: CGFloat = 4
+    static let lineHeight: CGFloat = 1
+    static let lineIndent: CGFloat = 48
+    static let iconSize: CGFloat = 28
+    
+    }
+
